@@ -25,21 +25,29 @@ export async function POST(request) {
       temperature: 0.7,
     });
 
-    if (completion.choices && completion.choices.length > 0) {
-      return NextResponse.json({
-        answer: completion.choices[0].message.content
-      });
-    } else {
+      if (completion.choices && completion.choices.length > 0) {
+        return NextResponse.json({
+          answer: completion.choices[0].message.content
+        });
+      } else {
+        console.error("Unexpected API response:", completion);
+        return NextResponse.json(
+          { error: "Unexpected response from DeepSeek API" },
+          { status: 500 }
+        );
+      }
+    } catch (apiError) {
+      console.error("DeepSeek API Error:", apiError);
       return NextResponse.json(
-        { error: "Unexpected response from DeepSeek API" },
-        { status: 500 }
+        { error: `API Error: ${apiError.message}` },
+        { status: 502 }
       );
     }
   } catch (error) {
-    console.error("Error fetching DeepSeek API:", error);
+    console.error("Request Error:", error);
     return NextResponse.json(
-      { error: `An error occurred: ${error.message}` },
-      { status: 500 }
+      { error: "Invalid request format" },
+      { status: 400 }
     );
   }
 }

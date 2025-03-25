@@ -18,7 +18,8 @@ export async function POST(request) {
     }
 
     const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: question }],
+      messages: [{ role: "system", "content": "You are a helpful assitant, please answer the question"}, 
+                 { role: "user", content: question }],
       model: "deepseek-chat",
       max_tokens: 500,
       temperature: 0.7,

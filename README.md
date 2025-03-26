@@ -23,7 +23,7 @@ A chat interface built with Next.js that integrates with the DeepSeek API for in
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:giselle-ming/nextjs-deepseek-chatbot.git
+git clone https://github.com/giselle-ming/nextjs-deepseek-chatbot.git
 cd nextjs-deepseek-chatbot
 ```
 

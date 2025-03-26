@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import Input from "./Input";
 
 const Chat = () => {
@@ -15,6 +16,7 @@ const Chat = () => {
     const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
+
     try {
       setLoading(true);
       const response = await fetch("/api/deepseek", {
@@ -66,11 +68,20 @@ const Chat = () => {
                   key={index}
                   className={`mb-2 ${
                     message.role === "user"
-                      ? "text-right text-[#56618f]"
-                      : "text-left text-[#414248]"
+                      ? "text-right text-gray-600 ml-5"
+                      : "text-left text-[#414248] mr-10"
                   }`}
                 >
-                  {message.content}
+                  <img
+                    src={"/ai.png"}
+                    className={
+                      message.role === "user"
+                        ? "hidden"
+                        : "w-8 h-8 inline-block mr-2"
+                    }
+                    alt=""
+                  />
+                  <ReactMarkdown>{message.content}</ReactMarkdown>
                 </div>
               ))}
               {loading && <div className="text-gray-500">Thinking...</div>}
